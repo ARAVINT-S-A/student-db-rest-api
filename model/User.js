@@ -27,7 +27,7 @@ const UserSchema=new mongoose.Schema({
         default:'user'
     },
     courses:{
-        type:[string]
+        type:[String]
     }
 })
 UserSchema.pre('save',async function(next){

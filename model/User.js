@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const bcrypt=require('bcryptjs')
 const validator=require('validator')
-const CoursesSchema=require('./courses').schema
+
 
 const UserSchema=new mongoose.Schema({
     name:{

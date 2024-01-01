@@ -26,6 +26,7 @@ app.use(fileUpload());
 //import routers
 const authRouter=require('./routes/authRoutes')
 const userRouter=require('./routes/userRoutes')
+const courseRouter=require('./routes/courseRoutes')
 
 //routes
 app.get('/',(req,res)=>{
@@ -34,7 +35,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/user',userRouter)
-
+app.use('/api/v1/course',courseRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);//this should always come affter notfound error

@@ -42,6 +42,7 @@ const logout=async(req,res)=>{
         httpOnly:true,
         expires:new Date(Date.now())
     })
+    res.status(StatusCodes.OK).json({msg:'logged out '})
 }
 
 module.exports={login,logout,register}

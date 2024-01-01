@@ -16,7 +16,18 @@ const showCurrentuser=async(req,res)=>{
 }
 
 const updateUser=async(req,res)=>{
-    res.send('update')
+    const {name,email}=req.body
+    if(!name || ! email){
+        throw new CustomError.BadRequestError('update failed no details given')
+    }
+    const user=await User.findById({_id:req.user.userId})
+    if(!user){
+        throw new CustomError.BadRequestError('no user found')
+    }
+    user.name=name
+    user.email=email
+    await user.save()
+    res.status(StatusCodes.OK).json({nsg:"update successful"})
 }
 
 const updateUserPassword=async(req,res)=>{

@@ -20,11 +20,28 @@ const register=async(req,res)=>{
 
 }
 const login=async(req,res)=>{
-    res.send('login')
+    const {email,password}=req.body
+    if(!email || !password){
+        throw new CustomError.BadRequestError('provide details')
+    }
+    const user=await User.findOne({email:email})
+    if(!user){
+        throw new CustomError.NotFoundError('no user with email')
+    }
+    const isMatch= await user.comparePassword(password)
+    if(!isMatch){
+        throw new CustomError.UnauthenticatedError('details wrong')
+    }
+    const tokenUser=createTokenUser({user})
+    attachCookiesToResponse({res,user:tokenUser})
+    res.status(StatusCodes.OK).json({tokenUser})
 }
 
 const logout=async(req,res)=>{
-    res.send('logout')
+    res.cookie('token','logout',{
+        httpOnly:true,
+        expires:new Date(Date.now())
+    })
 }
 
 module.exports={login,logout,register}

@@ -4,12 +4,15 @@ const User=require('../model/User')
 
 
 const getAllUser=async(req,res)=>{
-    res.send('get all user');
+    const users=await User.find({role:'user'}).select('-password')
+    res.status(StatusCodes.OK).json({users})
 }
 
 
 const showCurrentuser=async(req,res)=>{
-    res.send('showcurrent user')
+    const userId=req.user.userId
+    const user=await User.find({_id:userId}).select('-password')
+    res.status(StatusCodes.OK).json({user})
 }
 
 const updateUser=async(req,res)=>{

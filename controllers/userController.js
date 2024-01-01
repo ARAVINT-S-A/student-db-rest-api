@@ -27,11 +27,22 @@ const updateUser=async(req,res)=>{
     user.name=name
     user.email=email
     await user.save()
-    res.status(StatusCodes.OK).json({nsg:"update successful"})
+    res.status(StatusCodes.OK).json({msg:"update successful"})
 }
 
 const updateUserPassword=async(req,res)=>{
-    res.send('update password')
+    const {oldPassword,newPassword}=req.body
+    if(!oldPassword || !newPassword){
+        throw new CustomError.BadRequestError('no new or old password')
+    }
+    const user=await User.findById({_id:req.user.userId})
+    const isMatch=await user.comparePassword(oldPassword)
+    if(!isMatch){
+        throw new CustomError.UnauthenticatedError('wrong old password')
+    }
+    user.password=newPassword
+    await user.save()
+    res.status(StatusCodes.OK).json({msg:"password updated"})
 }
 
 module.exports={

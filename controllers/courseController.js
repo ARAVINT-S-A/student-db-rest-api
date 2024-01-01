@@ -14,6 +14,12 @@ const viewRegisteredCourses=async(req,res)=>{
 
 }
 
+const editCourseDetails=async(req,res)=>{
+
+}
+
 module.exports={registerCourse,
 getAllCourses,
-viewRegisteredCourses}
+viewRegisteredCourses,
+editCourseDetails
+}
